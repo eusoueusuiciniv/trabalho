@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Jogo Contra a Xenofobia</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f9; }
+        h1 { color: #333; }
+        .question { margin: 20px 0; padding: 10px; border: 1px solid #ddd; background-color: #fff; border-radius: 5px; }
+        .answer { margin: 10px 0; }
+        button { padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; }
+        .correct { background-color: #4caf50; color: white; }
+        .incorrect { background-color: #f44336; color: white; }
+        .next-question { background-color: #007bff; color: white; margin-top: 20px; display: none; }
+        .result { font-size: 18px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Quiz: Jogo Contra a Xenofobia</h1>
+    <div id="quiz-container">
+        <div id="question-container"></div>
+        <button id="next-button" class="next-question" onclick="nextQuestion()">Próxima Pergunta</button>
+    </div>
+    <p id="final-result" class="result"></p>
+
+    <script>
+        const questions = [
+            { question: "O que é xenofobia?", answers: ["Medo ou ódio de estrangeiros.", "Apreciação de outras culturas."], correct: 0 },
+            { question: "O que devemos fazer para combater a xenofobia?", answers: ["Promover respeito e inclusão.", "Ignorar as diferenças culturais."], correct: 0 },
+            { question: "A xenofobia é um crime em muitos países?", answers: ["Sim, é crime.", "Não, não é considerado crime."], correct: 0 },
+            { question: "Qual é uma maneira de praticar a empatia com pessoas de outras culturas?", answers: ["Ouvir e aprender sobre suas experiências.", "Evitar qualquer interação."], correct: 0 },
+            { question: "O que a xenofobia causa na sociedade?", answers: ["Conflitos e discriminação.", "Unidade e paz."], correct: 0 },
+            { question: "Qual desses exemplos é um comportamento xenofóbico?", answers: ["Evitar alguém por sua nacionalidade.", "Convidar alguém de outra cultura para conversar."], correct: 0 },
+            { question: "O que é inclusão cultural?", answers: ["Aceitar e respeitar diferentes culturas.", "Rejeitar culturas diferentes da sua."], correct: 0 },
+            { question: "A xenofobia pode ocorrer dentro de um mesmo país?", answers: ["Sim, contra grupos internos.", "Não, apenas entre países diferentes."], correct: 0 },
+            { question: "O que podemos fazer para promover a diversidade?", answers: ["Apoiar iniciativas multiculturais.", "Segregar pessoas por suas origens."], correct: 0 },
+            { question: "Por que é importante combater a xenofobia?", answers: ["Para construir uma sociedade mais justa.", "Para manter as tradições inalteradas."], correct: 0 },
+            { question: "Qual dessas ações ajuda a combater a xenofobia?", answers: ["Educar-se sobre diferentes culturas.", "Evitar contato com estrangeiros."], correct: 0 },
+            { question: "O que significa respeito à diversidade?", answers: ["Apreciar diferentes culturas e tradições.", "Desprezar aquilo que é diferente."], correct: 0 },
+            { question: "A xenofobia está ligada ao preconceito?", answers: ["Sim, ambos envolvem discriminação.", "Não, são conceitos diferentes."], correct: 0 },
+            { question: "Podemos aprender algo com culturas diferentes?", answers: ["Sim, podemos ampliar nossa visão de mundo.", "Não, só nossa cultura é válida."], correct: 0 },
+            { question: "Cidadania global implica o quê?", answers: ["Respeito e convivência pacífica entre nações.", "Isolamento cultural e social."], correct: 0 },
+            { question: "Uma pessoa pode ser vítima de xenofobia por causa de quê?", answers: ["Sua nacionalidade ou etnia.", "Seu gosto por música."], correct: 0 },
+            { question: "A xenofobia pode levar a?", answers: ["Conflitos e violência.", "Maior entendimento entre culturas."], correct: 0 },
+            { question: "Como podemos melhorar o entendimento entre culturas?", answers: ["Dialogando e aprendendo sobre outras culturas.", "Fechando-nos para novas experiências."], correct: 0 },
+            { question: "Qual das seguintes é uma ação antixenofóbica?", answers: ["Acolher imigrantes e refugiados.", "Excluir estrangeiros de espaços públicos."], correct: 0 },
+            { question: "O que representa uma sociedade multicultural?", answers: ["Convivência harmoniosa entre diferentes culturas.", "Predomínio de uma única cultura."], correct: 0 }
+        ];
+
+        let currentQuestion = 0;
+        let correctAnswers = 0;
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('question-container');
+            container.innerHTML = `
+                <div class="question">
+                    <p><strong>${currentQuestion + 1}. ${question.question}</strong></p>
+                    <button class="answer" onclick="checkAnswer(0)">${question.answers[0]}</button>
+                    <button class="answer" onclick="checkAnswer(1)">${question.answers[1]}</button>
+                </div>
+            `;
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const question = questions[currentQuestion];
+            const nextButton = document.getElementById('next-button');
+            const container = document.getElementById('question-container');
+            if (selectedAnswer === question.correct) {
+                correctAnswers++;
+                container.innerHTML += `<p class="correct">Resposta correta!</p>`;
+            } else {
+                container.innerHTML += `<p class="incorrect">Resposta incorreta.</p>`;
+            }
+            nextButton.style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            const nextButton = document.getElementById('next-button');
+            nextButton.style.display = 'none';
+            if (currentQuestion < questions.length) {
+                showQuestion();
+            } else {
+                showFinalResult();
+            }
+        }
+
+        function showFinalResult() {
+            const result = document.getElementById('final-result');
+            result.innerHTML = `Você acertou ${correctAnswers} de ${questions.length} perguntas!`;
+            document.getElementById('question-container').style.display = 'none';
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>
